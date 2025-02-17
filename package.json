@@ -1,0 +1,24 @@
+{
+	"name": "vitest-bank",
+	"version": "1.0.0",
+	"description": "BMSZC Petrik Szoftverfejlesztőinek js automatizált tesztelést bemutató projektje.",
+	"homepage": "https://github.com/hrustinszkiadam/vitest-bank#readme",
+	"bugs": {
+		"url": "https://github.com/hrustinszkiadam/vitest-bank/issues"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/hrustinszkiadam/vitest-bank.git"
+	},
+	"license": "ISC",
+	"author": "hrustinszkiadam",
+	"type": "module",
+	"main": "src/index.js",
+	"scripts": {
+		"test": "vitest"
+	},
+	"devDependencies": {
+		"prettier": "^3.5.1",
+		"vitest": "^3.0.5"
+	}
+}

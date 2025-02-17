@@ -1,6 +1,3 @@
 {
-    "recommendations": [
-        "vitest.explorer",
-        "deinsoftware.vitest-snippets"
-    ]
+	"recommendations": ["vitest.explorer", "deinsoftware.vitest-snippets"]
 }
