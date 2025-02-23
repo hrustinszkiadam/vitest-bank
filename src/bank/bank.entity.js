@@ -88,8 +88,35 @@ export class Bank {
 	 * @param {string} hova A cél számla számlaszáma. Nem lehet null, nem lehet üres, léteznie kell.
 	 * @param {number} osszeg Az átutalandó egyenleg. Csak pozitív egész szám lehet.
 	 * @returns {boolean} Az utalás sikeressége. True ha volt elég összeg a forrás számlán, különben false.
+	 * @throws {Error} Ha a megadott számlaszám üres.
+	 * @throws {Error} Ha az összeg nem pozitív egész szám.
+	 * @throws {Error} Ha a forrás vagy a cél számlaszám nem létezik.
+	 * @throws {Error} Ha a forrás és a cél számlaszám megegyezik.
 	 */
 	utal(honnan, hova, osszeg) {
-		throw new Error('Not implemented');
+		if (!honnan || honnan === '' || !hova || hova === '') {
+			throw new Error('A számlaszámok nem lehetnek üresesk');
+		}
+		if (honnan === hova) {
+			throw new Error('A forrás és a cél számlaszám nem lehet azonos');
+		}
+		if (!Number.isInteger(osszeg) || osszeg <= 0) {
+			throw new Error('Az összeg csak pozitív egész szám lehet');
+		}
+		const forras = this.szamlak.find((s) => s.szamlaszam === honnan);
+		if (!forras) {
+			throw new Error('A forrás számlaszám nem létezik');
+		}
+		const cel = this.szamlak.find((s) => s.szamlaszam === hova);
+		if (!cel) {
+			throw new Error('A cél számlaszám nem létezik');
+		}
+		if (forras.egyenleg < osszeg) {
+			return false;
+		}
+
+		forras.egyenleg -= osszeg;
+		cel.egyenleg += osszeg;
+		return true;
 	}
 }
