@@ -139,9 +139,7 @@ describe('Bank', () => {
 			bank.egyenlegFeltolt('87654321', 2000);
 			expect(() => bank.utal('12345678', '87654321')).toThrow();
 			expect(() => bank.utal('12345678', '87654321', null)).toThrow();
-			expect(() =>
-				bank.utal('12345678', '87654321', undefined),
-			).toThrow();
+			expect(() => bank.utal('12345678', '87654321', undefined)).toThrow();
 			expect(() => bank.utal('12345678', '87654321', -1000)).toThrow();
 			expect(() => bank.utal('12345678', '87654321', 0)).toThrow();
 			expect(() => bank.utal('12345678', '87654321', 0.5)).toThrow();

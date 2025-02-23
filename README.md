@@ -1,11 +1,10 @@
 # BankProject
 
-BMSZC Petrik Szoftverfejlesztőinek js automatizált tesztelést bemutató projektje.
+Vitest használatát bemutató projekt.
 
 ## Projekt létrehozás lépései
 
 - Projekt létrehozása (ha még nincs package.json állomány)
-    - test script-nek "vitest" legyen megadva
 
 ```sh
 npm init
@@ -14,7 +13,7 @@ npm init
 - [vitest](https://vitest.dev/) telepítése
 
 ```sh
-npm install --save-dev vitest
+npm i -D vitest
 ```
 
 ## Klónozás után telepítés lépései
@@ -22,7 +21,17 @@ npm install --save-dev vitest
 - node modulok telepítése
 
 ```sh
-npm install
+npm i
+```
+
+- Teszt script elkészítése (package.json)
+
+```json
+{
+  "scripts": {
+    "test": "vitest"
+  },
+}
 ```
 
 - Tesztek futtatása
@@ -31,25 +40,38 @@ npm install
 npm run test
 ```
 
+## Opcionális
+
+- vitest.config file létrehozása
+
+> A globals opció beállítása után a fileokban nem lesz szükség a vitest modulok importálására
+
+```javascript
+import { defineConfig, defaultExclude } from 'vitest/config';
+
+export default defineConfig({
+  test: {
+    globals: true,
+    exclude: [...defaultExclude],
+  },
+});
+```
+
 ## Javasolt vscode bővítmények
 
 - [vitest](https://marketplace.visualstudio.com/items?itemName=vitest.explorer)
-    - A bővítmény megfelelő működéséhez szükséges lehet vite / vitest config fájl létrehozására
+  - A bővítmény megfelelő működéséhez szükséges lehet vite / vitest config fájl létrehozására
 - [vitest snippets](https://marketplace.visualstudio.com/items?itemName=deinsoftware.vitest-snippets)
 
 ## Teszt fájl létrehozása
 
 - Teszt fájloknak az alábbi reguláros kifejezésnek kell megfelelnie: `**/__tests__/**/*.[jt]s?(x), **/?(*.)+(spec|test).[tj]s?(x)`
 - Reguláris kifejezés jelentése
-    - Bármilyen javascriptnek megfelelő fájl, ami:
-        - Bárhol egy `__tests__` nevű mappában vagy annak almappáiban van vagy
-        - A fájl neve `.spec`-el vagy `.test`-el végződik
-        - Fájlok kiterjesztése az alábbi lehet:
-            - js: hagyományos javascript fájl
-            - ts: typescript fájl
-            - jsx: react javascript fájl
-            - tsx: react typescript fájl
-
-## Segédlet
-
-Halász Gábor egységtesztelés segédlete elérhető [itt](https://segedletek.level14.hu/2019/03/02/nunit.html)
+  - Bármilyen javascriptnek megfelelő fájl, ami:
+    - Bárhol egy `__tests__` nevű mappában vagy annak almappáiban van vagy
+    - A fájl neve `.spec`-el vagy `.test`-el végződik
+    - Fájlok kiterjesztése az alábbi lehet:
+      - js: hagyományos javascript fájl
+      - ts: typescript fájl
+      - jsx: react javascript fájl
+      - tsx: react typescript fájl
