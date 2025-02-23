@@ -1,5 +1,4 @@
 import { Bank } from './bank.entity.js';
-import { it, describe, expect, beforeEach } from 'vitest';
 
 describe('Bank', () => {
 	let bank = new Bank();
@@ -24,6 +23,33 @@ describe('Bank', () => {
 			expect(() => bank.ujSzamla('John Doe', null)).toThrow();
 			expect(() => bank.ujSzamla(null, '12345678')).toThrow();
 			expect(() => bank.ujSzamla(undefined, '12345678')).toThrow();
+		});
+
+		it('should throw an error if the account number already exists', () => {
+			bank.ujSzamla('John Doe', '12345678');
+			expect(() => bank.ujSzamla('Jane Doe', '12345678')).toThrow();
+			expect(() => bank.ujSzamla('Jane Doe', '12345678')).toThrow();
+		});
+	});
+
+	describe('egyenleg', () => {
+		it('should return the balance of the given account number', () => {
+			bank.ujSzamla('John Doe', '12345678');
+			bank.ujSzamla('Jane Doe', '87654321');
+			expect(bank.egyenleg('12345678')).toBe(0);
+			expect(bank.egyenleg('87654321')).toBe(0);
+		});
+
+		it('should throw an error if the account number is invalid', () => {
+			expect(() => bank.egyenleg()).toThrow();
+			expect(() => bank.egyenleg(null)).toThrow();
+			expect(() => bank.egyenleg(undefined)).toThrow();
+			expect(() => bank.egyenleg('')).toThrow();
+		});
+
+		it('should throw an error if the account number does not exist', () => {
+			bank.ujSzamla('John Doe', '12345678');
+			expect(() => bank.egyenleg('87654321')).toThrow();
 		});
 	});
 });
