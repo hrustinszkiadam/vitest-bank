@@ -52,4 +52,37 @@ describe('Bank', () => {
 			expect(() => bank.egyenleg('87654321')).toThrow();
 		});
 	});
+
+	describe('egyenlegFeltolt', () => {
+		it('should add the given amount of money to the given account number', () => {
+			bank.ujSzamla('John Doe', '12345678');
+			bank.ujSzamla('Jane Doe', '87654321');
+			bank.egyenlegFeltolt('12345678', 1000);
+			bank.egyenlegFeltolt('87654321', 2000);
+			expect(bank.egyenleg('12345678')).toBe(1000);
+			expect(bank.egyenleg('87654321')).toBe(2000);
+		});
+
+		it('should throw an error if the account number is invalid', () => {
+			expect(() => bank.egyenlegFeltolt()).toThrow();
+			expect(() => bank.egyenlegFeltolt(null)).toThrow();
+			expect(() => bank.egyenlegFeltolt(undefined)).toThrow();
+			expect(() => bank.egyenlegFeltolt('')).toThrow();
+		});
+
+		it('should throw an error if the account number does not exist', () => {
+			bank.ujSzamla('John Doe', '12345678');
+			expect(() => bank.egyenlegFeltolt('87654321', 1000)).toThrow();
+		});
+
+		it('should throw an error if the amount is invalid', () => {
+			bank.ujSzamla('John Doe', '12345678');
+			expect(() => bank.egyenlegFeltolt('12345678')).toThrow();
+			expect(() => bank.egyenlegFeltolt('12345678', null)).toThrow();
+			expect(() => bank.egyenlegFeltolt('12345678', undefined)).toThrow();
+			expect(() => bank.egyenlegFeltolt('12345678', -1000)).toThrow();
+			expect(() => bank.egyenlegFeltolt('12345678', 0)).toThrow();
+			expect(() => bank.egyenlegFeltolt('12345678', 0.5)).toThrow();
+		});
+	});
 });

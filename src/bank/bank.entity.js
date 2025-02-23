@@ -64,9 +64,22 @@ export class Bank {
 	 * Egy létező számlára pénzt helyez
 	 * @param {string} szamlaszam A számla számlaszáma, amire pénzt helyez. Nem lehet null, nem lehet üres, léteznie kell.
 	 * @param {number} osszeg A számlára helyezendő pénzösszeg. Csak pozitív egész szám lehet.
+	 * @throws {Error} Ha a megadott számlaszám üres.
+	 * @throws {Error} Ha a számlaszám nem létezik.
+	 * @throws {Error} Ha az összeg nem pozitív egész szám.
 	 */
 	egyenlegFeltolt(szamlaszam, osszeg) {
-		throw new Error('Not implemented');
+		if (!szamlaszam || szamlaszam === '') {
+			throw new Error('A számlaszám nem lehet üres');
+		}
+		if (!Number.isInteger(osszeg) || osszeg <= 0) {
+			throw new Error('Az összeg csak pozitív egész szám lehet');
+		}
+		const szamla = this.szamlak.find((s) => s.szamlaszam === szamlaszam);
+		if (!szamla) {
+			throw new Error('A számlaszám nem létezik');
+		}
+		szamla.egyenleg += osszeg;
 	}
 
 	/**
