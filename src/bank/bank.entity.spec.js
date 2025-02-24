@@ -30,6 +30,11 @@ describe('Bank', () => {
 			expect(() => bank.ujSzamla('Jane Doe', '12345678')).toThrow();
 			expect(() => bank.ujSzamla('Jane Doe', '12345678')).toThrow();
 		});
+
+		it("should not throw an error if the account holder's name already exists", () => {
+			bank.ujSzamla('John Doe', '12345678');
+			expect(() => bank.ujSzamla('John Doe', '87654321')).not.toThrow();
+		});
 	});
 
 	describe('egyenleg', () => {
