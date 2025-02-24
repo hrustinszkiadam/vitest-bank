@@ -137,6 +137,12 @@ describe('Bank', () => {
 			expect(() => bank.utal('12345678', '87654321', 1000)).toThrow();
 		});
 
+		it('should throw an error if the source and target account numbers are the same', () => {
+			bank.ujSzamla('John Doe', '12345678');
+			bank.egyenlegFeltolt('12345678', 1000);
+			expect(() => bank.utal('12345678', '12345678', 1000)).toThrow();
+		});
+
 		it('should throw an error if the amount is invalid', () => {
 			bank.ujSzamla('John Doe', '12345678');
 			bank.ujSzamla('Jane Doe', '87654321');
